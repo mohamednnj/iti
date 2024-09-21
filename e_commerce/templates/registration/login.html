@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Login {% endblock title %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'songs/css/styles.css' %}">
+{% endblock head %}
+
+{% block content %}
+<h1 class="text-center text-success">{% if signup %}Signup{%else%}Login{%endif%}</h1>
+<div class=".form-container">
+<div class="alert alert-success alert-dismissible fade show my-5 d-none" role="alert">
+  <strong>Sign up Success!</strong> You may sign in using your new credentials.
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<form method="POST" class="form-container" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form}}
+
+    <button class="btn btn-success w-25 mt-5" type="submit">{% if signup %}Signup{%else%}Login{%endif%}</button>
+    {% if not signup %}
+    <p class="mt-3">New Member? <a href="{% url 'signup' %}">Register</a></p>
+    {%endif%}
+</form>
+</div>
+
+
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const success = urlParams.get('success');
+
+    if (success === "true") {
+        document.querySelector(".alert.d-none").classList.remove("d-none")
+    }
+</script>
+<style>
+    .form-container {
+        width: 99vw;
+        height: 99vh;
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+    }
+    form {
+      max-width: 50vw;
+      margin: 50px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background-color: #f9f9f9;
+    }
+    
+    /* Styling the form fields */
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1.2em;
+    }
+    
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+    
+    /* Styling the button */
+    button {
+      background-color: #28a745;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1.2em;
+    }
+    
+    button:hover {
+      background-color: #218838;
+    }
+    
+    /* Styling the registration link */
+    p {
+      text-align: center;
+    }
+    
+    a {
+      color: #007bff;
+      text-decoration: none;
+    }
+    
+    a:hover {
+      text-decoration: underline;
+    }
+    
+</style>
+{% endblock content %}
